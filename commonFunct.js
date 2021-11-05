@@ -1,4 +1,5 @@
 const { upperCase } = require("upper-case")
+fs = require('fs')
 
 const fieldNameToJavaName = (field, titleCase) => {
     const fieldArr = field.split('')
@@ -17,6 +18,13 @@ const fieldNameToJavaName = (field, titleCase) => {
     return tmp
 }
 
+const writeFile = ({fileName, fileContent}) => {
+    fs.writeFile(fileName, fileContent, function (err) {
+        if (err) return console.log(err);
+    });
+}
+
 module.exports = {
-    fieldNameToJavaName
+    fieldNameToJavaName,
+    writeFile
 }
