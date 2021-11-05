@@ -18,7 +18,7 @@ const createWorkStreamFolders = (workStream) => {
 let distinctTableList
 let distinctWorkStreamList
 csv()
-    .fromFile('D:/node/genJavaFromExcel/entity.csv')
+    .fromFile('entity.csv')
     .then((jsonObj) => {
         const tableList = jsonObj.map(x => fieldNameToJavaName(x["Table Name"], true))
         const workStreamList = jsonObj.map(x => x["Workstream"])
@@ -46,7 +46,7 @@ csv()
 
 
 csv()
-    .fromFile('D:/node/genJavaFromExcel/function.csv')
+    .fromFile('function.csv')
     .then((jsonObj) => {
 
         const functionList = jsonObj.map(x => {
