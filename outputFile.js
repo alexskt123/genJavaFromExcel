@@ -3,6 +3,7 @@ const distinct = require('distinct')
 var os = require("os")
 const { titleCase } = require('title-case')
 const {pascalCase} = require('change-case')
+const config = require('./config')
 
 const outputEntityFile = (distinctWorkStreamList, distinctTableList, tableFieldList) => {
 
@@ -46,7 +47,7 @@ const outputEntityFile = (distinctWorkStreamList, distinctTableList, tableFieldL
         const curTablesWithWorkStream = distinct(tableFieldList.filter(x => x.workStream === workStream).map(x => x.table))
         distinctTableList.filter(x => curTablesWithWorkStream.includes(x)).forEach(t => {
 
-            const fileName = `./output/org/life/${workStream}/entity/${t}.java`
+            const fileName = `${config.outputPath}${workStream}/entity/${t}.java`
 
             const fieldStringList = tableFieldList.filter(x => x.table === t).map(x => {
                 const fieldString = `\t@Column(name = "${x.column}")${os.EOL}\tprivate ${x.type} ${x.field};${os.EOL}`
@@ -82,7 +83,7 @@ const genGetter = (type, varName) => {
 const outputControllerFile = (distinctWorkStreamList, functionList, distinctTableList) => {
     distinctWorkStreamList.forEach(workStream => {        
 
-        const fileName = `./output/org/life/${workStream}/controller/${titleCase(workStream)}Controller.java`
+        const fileName = `${config.outputPath}${workStream}/controller/${titleCase(workStream)}Controller.java`
 
         //const importEntity = distinctTableList.map(d => `    import org.life.${workStream}.entity.${d};`).join(os.EOL)
 
@@ -145,7 +146,7 @@ const outputControllerFile = (distinctWorkStreamList, functionList, distinctTabl
 const outputServiceFile = (distinctWorkStreamList, functionList, distinctTableList) => {
     distinctWorkStreamList.forEach(workStream => {
 
-        const fileName = `./output/org/life/${workStream}/service/${titleCase(workStream)}Service.java`
+        const fileName = `${config.outputPath}${workStream}/service/${titleCase(workStream)}Service.java`
 
         //const importEntity = distinctTableList.map(d => `   import org.life.${workStream}.entity.${d};`).join(os.EOL)
 

@@ -8,17 +8,17 @@ const config = require('./config')
 const { outputEntityFile, outputControllerFile, outputServiceFile } = require('./outputFile');
 const { fieldNameToJavaName } = require('./commonFunct');
 
+
 const createWorkStreamFolders = (workStream) => {
-    mkdirp.sync(`./output/org/life/${workStream}`)
-    mkdirp.sync(`./output/org/life/${workStream}/entity`)
-    mkdirp.sync(`./output/org/life/${workStream}/controller`)
-    mkdirp.sync(`./output/org/life/${workStream}/service`)
+    mkdirp.sync(`${config.outputPath}${workStream}`)
+    config.outputFolders.forEach(x => mkdirp.sync(`${config.outputPath}${workStream}/${x}`))   
 }
 
 let distinctTableList
 let distinctWorkStreamList
+
 csv()
-    .fromFile('entity.csv')
+    .fromFile(`${config.inputPath}entity.csv`)
     .then((jsonObj) => {
         const tableList = jsonObj.map(x => fieldNameToJavaName(x["Table Name"], true))
         const workStreamList = jsonObj.map(x => x["Workstream"])
@@ -46,7 +46,7 @@ csv()
 
 
 csv()
-    .fromFile('function.csv')
+    .fromFile(`${config.inputPath}function.csv`)
     .then((jsonObj) => {
 
         const functionList = jsonObj.map(x => {
