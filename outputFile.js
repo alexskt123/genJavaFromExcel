@@ -54,7 +54,7 @@ const outputControllerFile = (distinctWorkStreamList, functionList, distinctTabl
         const fileHeader = controllerFileHeader(workStream)
 
         const functionStringList = functionList.filter(x => x.workStream === workStream).map(x => {
-            const inputTemplate = x.input.split(',').map(i => {
+            const inputTemplate = x.input.split(',').filter(x => x !== 'N/A').map(i => {
                 const input = i.includes('request') ? `${x.method === "Post" ? '@RequestBody ' : ''} ${getFunctionInput(i)}` : `@RequestParam ${getFunctionInput(i)}`
                 return input
             }).join(', ')
@@ -62,8 +62,7 @@ const outputControllerFile = (distinctWorkStreamList, functionList, distinctTabl
             const functionTemplate = `\t@${x.method}Mapping(value="/${x.name}", produces=APPLICATION_JSON_VALUE)
             @Override
             public ${x.output} ${x.name} (
-                    ${inputTemplate}
-                    , HttpServletResponse response
+                    ${inputTemplate}                    
             ) throws BaseException {
             }${os.EOL}`
 
