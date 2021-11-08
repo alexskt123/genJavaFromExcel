@@ -1,5 +1,12 @@
 const { upperCase } = require("upper-case")
 fs = require('fs')
+const { upperCaseFirst } = require('upper-case-first')
+
+const handleType = (type) => {
+    return type.includes('List<') ? `List<${upperCaseFirst(type.replace('List<', ''))}>`
+            : type.includes('<') ? `<${upperCaseFirst(type.replace('<', ''))}>`
+            : type
+}
 
 const fieldNameToJavaName = (field, titleCase) => {
     const fieldArr = field.split('')
@@ -26,5 +33,6 @@ const writeFile = ({fileName, fileContent}) => {
 
 module.exports = {
     fieldNameToJavaName,
-    writeFile
+    writeFile,
+    handleType
 }

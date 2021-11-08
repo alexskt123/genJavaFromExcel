@@ -6,7 +6,7 @@ const mkdirp = require('mkdirp')
 
 const config = require('./config')
 const { outputEntityFile, outputControllerFile, outputServiceFile } = require('./outputFile');
-const { fieldNameToJavaName } = require('./commonFunct');
+const { fieldNameToJavaName, handleType } = require('./commonFunct');
 
 
 const createWorkStreamFolders = (workStream) => {
@@ -36,7 +36,7 @@ csv()
                 table: fieldNameToJavaName(x["Table Name"], true),
                 column: upperCase(x["Field Name"]),
                 field: fieldNameToJavaName(x["Field Name"], false),
-                type: (config.dataTypeMapping.find(dt => dt.mapping.find(m => startWith(x["Data Type"], m))) || { type: x["Data Type"] }).type
+                type: handleType((config.dataTypeMapping.find(dt => dt.mapping.find(m => startWith(x["Data Type"], m))) || { type: x["Data Type"] }).type)
             }
         })
 
@@ -60,8 +60,8 @@ csv()
             }
         })
 
-        const filteredFunctionList = functionList.filter(x => x.input !== '' && x.output !== '')
+        const filteredFunctionList = functionList.filter(x => x && x.input !== '' && x.output !== '')
 
-        outputControllerFile(distinctWorkStreamList, filteredFunctionList, distinctTableList.filter(x => !x.includes("Hst")))
-        outputServiceFile(distinctWorkStreamList, filteredFunctionList, distinctTableList.filter(x => !x.includes("Hst")))
+        outputControllerFile(distinctWorkStreamList, filteredFunctionList, distinctTableList.filter(x => x && !x.includes("Hst")))
+        outputServiceFile(distinctWorkStreamList, filteredFunctionList, distinctTableList.filter(x => x && !x.includes("Hst")))
     })

@@ -5,13 +5,15 @@ const config = {
     dataTypeMapping: [
         {type: "String", mapping: ["Varchar"]},
         {type: "Date", mapping: ["Datetime", "Date"]},
-        {type: "UUID", mapping: ["RAW"]},
+        {type: "UUID", mapping: ["RAW", "Raw"]},
         {type: "BigDecimal", mapping: ["NUMBER", "Number"]},
         {type: "Integer", mapping: ["int", "integer"]}
     ],
     apiOutputMapping: [
         {type: "Boolean", mapping: ["True", "False"]},
-        {type: "BaseResponse", mapping: ["BaseResponse"]}
+        {type: "BaseResponse", mapping: ["BaseResponse"]},
+        {type: "UUID", mapping: ["UUID"]},
+        {type: "String", mapping: ["String"]}
     ],
     apiMethodMapping: [
         {type: "Post", mapping: ["sv"]},

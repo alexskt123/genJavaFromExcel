@@ -2,10 +2,14 @@ fs = require('fs')
 const distinct = require('distinct')
 var os = require("os")
 const { titleCase } = require('title-case')
-const { pascalCase } = require('change-case')
+const { upperCaseFirst } = require('upper-case-first')
 const config = require('./config')
 const { entityFileHeader, controllerFileHeader, serviceFileHeader } = require('./template')
 const { writeFile } = require('./commonFunct')
+
+const getEntityType = (type) => {
+    return type.includes('List<') ? type : type.replace('<', '').replace('>', '')
+}
 
 const outputEntityFile = (distinctWorkStreamList, distinctTableList, tableFieldList) => {
 
@@ -16,7 +20,7 @@ const outputEntityFile = (distinctWorkStreamList, distinctTableList, tableFieldL
             const fileName = `${config.outputPath}${workStream}/entity/${t}.java`
 
             const fieldStringList = tableFieldList.filter(x => x.table === t).map(x => {
-                const fieldString = `\t@Column(name = "${x.column}")${os.EOL}\tprivate ${x.type} ${x.field};${os.EOL}`
+                const fieldString = `\t@Column(name = "${x.column}")${os.EOL}\tprivate ${getEntityType(x.type)} ${x.field};${os.EOL}`
                 return fieldString
             }).join(os.EOL)
 
@@ -37,7 +41,7 @@ const getFunctionInput = (i) => {
 }
 
 const genGetter = (type, varName) => {
-    const template = type.includes('<') && type.includes('>') ? `    public ${type} get${pascalCase(varName)}(){
+    const template = type.includes('<') && type.includes('>') ? `    public ${getEntityType(type)} get${upperCaseFirst(varName)}(){
         return ${varName};
     }` : ''
 

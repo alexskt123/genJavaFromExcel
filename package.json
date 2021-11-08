@@ -11,6 +11,7 @@
   "start-with": "^1.0.2",
   "title-case": "^3.0.3",
   "upper-case": "^2.0.2",
+  "upper-case-first": "^2.0.2",
   "write": "^2.0.0"
  }
 }
