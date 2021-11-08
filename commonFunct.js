@@ -3,8 +3,8 @@ fs = require('fs')
 const { upperCaseFirst } = require('upper-case-first')
 
 const handleType = (type) => {
-    return type.includes('List<') ? `List<${upperCaseFirst(type.replace('List<', ''))}>`
-            : type.includes('<') ? `<${upperCaseFirst(type.replace('<', ''))}>`
+    return type.includes('List<') ? `List<${upperCaseFirst(type.replace('List<', ''))}`
+            : type.includes('<') ? `<${upperCaseFirst(type.replace('<', ''))}`
             : type
 }
 
