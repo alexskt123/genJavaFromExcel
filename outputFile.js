@@ -88,7 +88,7 @@ const outputServiceFile = (distinctWorkStreamList, functionList, distinctTableLi
         const fileHeader = serviceFileHeader(workStream)
 
         const functionStringList = functionList.filter(x => x.workStream === workStream).map(x => {
-            const inputTemplate = x.input.split(',').map(i => {
+            const inputTemplate = x.input.split(',').filter(x => x !== 'N/A').map(i => {
                 const input = getFunctionInput(i)
                 return input
             }).join(', ')
