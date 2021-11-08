@@ -2,6 +2,10 @@ const { upperCase } = require("upper-case")
 fs = require('fs')
 const { upperCaseFirst } = require('upper-case-first')
 
+const filterCSVObj = (csvObj) => {
+    return csvObj.filter(x => x?.Workstream?.length > 0)
+}
+
 const handleType = (type) => {
     return type.includes('List<') ? `List<${upperCaseFirst(type.replace('List<', ''))}`
             : type.includes('<') ? `<${upperCaseFirst(type.replace('<', ''))}`
@@ -34,5 +38,6 @@ const writeFile = ({fileName, fileContent}) => {
 module.exports = {
     fieldNameToJavaName,
     writeFile,
-    handleType
+    handleType,
+    filterCSVObj
 }

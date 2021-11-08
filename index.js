@@ -6,7 +6,7 @@ const mkdirp = require('mkdirp')
 
 const config = require('./config')
 const { outputEntityFile, outputControllerFile, outputServiceFile } = require('./outputFile');
-const { fieldNameToJavaName, handleType } = require('./commonFunct');
+const { fieldNameToJavaName, handleType, filterCSVObj } = require('./commonFunct');
 
 
 const createWorkStreamFolders = (workStream) => {
@@ -19,7 +19,8 @@ let distinctWorkStreamList
 
 csv()
     .fromFile(`${config.inputPath}entity.csv`)
-    .then((jsonObj) => {
+    .then((csvObj) => {
+        const jsonObj = filterCSVObj(csvObj)
         const tableList = jsonObj.map(x => fieldNameToJavaName(x["Table Name"], true))
         const workStreamList = jsonObj.map(x => x["Workstream"])
         distinctTableList = distinct(tableList)
@@ -47,8 +48,9 @@ csv()
 
 csv()
     .fromFile(`${config.inputPath}function.csv`)
-    .then((jsonObj) => {
+    .then((csvObj) => {
 
+        const jsonObj = filterCSVObj(csvObj)
         const functionList = jsonObj.map(x => {
 
             return {
