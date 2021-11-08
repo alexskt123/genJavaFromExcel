@@ -37,7 +37,7 @@ const getFunctionInput = (i) => {
 }
 
 const genGetter = (type, varName) => {
-    const template = type.includes('List<') ? `    public ${type} get${pascalCase(varName)}(){
+    const template = type.includes('<') && type.includes('>') ? `    public ${type} get${pascalCase(varName)}(){
         return ${varName};
     }` : ''
 
