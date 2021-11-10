@@ -4,20 +4,20 @@ const { fieldNameToJavaName, handleEntityFile, handleFunctionFile, getCSVObj } =
 
 (async () => {
 
-    const entityObj = await getCSVObj(`${config.inputPath}entity.csv`)
-    const functionObj = await getCSVObj(`${config.inputPath}function.csv`)
+    const entityObj = await getCSVObj(`${config.inputPath}entity.csv`);
+    const functionObj = await getCSVObj(`${config.inputPath}function.csv`);
 
-    const tableList = entityObj.map(x => fieldNameToJavaName(x["Table Name"], true))
-    const workStreamList = entityObj.map(x => x["Workstream"])
+    const tableList = entityObj.map(x => fieldNameToJavaName(x["Table Name"], true));
+    const workStreamList = entityObj.map(x => x["Workstream"]);
 
-    const distinctTableList = distinct(tableList)
-    const distinctWorkStreamList = distinct(workStreamList)
+    const distinctTableList = distinct(tableList);
+    const distinctWorkStreamList = distinct(workStreamList);
 
-    handleEntityFile(distinctWorkStreamList, distinctTableList, entityObj)
-    handleFunctionFile(distinctWorkStreamList, distinctTableList, functionObj)
+    handleEntityFile(distinctWorkStreamList, distinctTableList, entityObj);
+    handleFunctionFile(distinctWorkStreamList, distinctTableList, functionObj);
 
 })().catch(e => {
-    console.log(e)
+    console.log(e);
 });
 
 
