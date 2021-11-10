@@ -1,6 +1,6 @@
-fs = require('fs')
+const fs = require('fs')
 const distinct = require('distinct')
-var os = require("os")
+const os = require("os")
 const { titleCase } = require('title-case')
 const { upperCaseFirst } = require('upper-case-first')
 const config = require('./config')
@@ -53,7 +53,7 @@ const genGetter = (type, varName) => {
     return template
 }
 
-const outputControllerFile = (distinctWorkStreamList, functionList, distinctTableList) => {
+const outputControllerFile = (distinctWorkStreamList, functionList, _distinctTableList) => {
     distinctWorkStreamList.forEach(workStream => {
 
         const fileName = `${config.outputPath}${workStream}/controller/${titleCase(workStream)}Controller.java`
@@ -86,7 +86,7 @@ const outputControllerFile = (distinctWorkStreamList, functionList, distinctTabl
     })
 }
 
-const outputServiceFile = (distinctWorkStreamList, functionList, distinctTableList) => {
+const outputServiceFile = (distinctWorkStreamList, functionList, _distinctTableList) => {
     distinctWorkStreamList.forEach(workStream => {
 
         const fileName = `${config.outputPath}${workStream}/service/${titleCase(workStream)}Service.java`

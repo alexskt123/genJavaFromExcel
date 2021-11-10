@@ -1,5 +1,4 @@
 const { upperCase } = require("upper-case")
-fs = require('fs')
 const { upperCaseFirst } = require('upper-case-first')
 const csv = require('csvtojson')
 var startWith = require('start-with')
