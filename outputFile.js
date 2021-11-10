@@ -5,7 +5,12 @@ const { titleCase } = require('title-case')
 const { upperCaseFirst } = require('upper-case-first')
 const config = require('./config')
 const { entityFileHeader, controllerFileHeader, serviceFileHeader } = require('./template')
-const { writeFile } = require('./commonFunct')
+
+const writeFile = ({fileName, fileContent}) => {
+    fs.writeFile(fileName, fileContent, function (err) {
+        if (err) return console.log(err);
+    });
+}
 
 const getEntityType = (type) => {
     return type.includes('List<') ? type : type.replace('<', '').replace('>', '')
