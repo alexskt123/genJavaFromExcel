@@ -62,8 +62,8 @@ const handleEntityFile = (distinctWorkStreamList, distinctTableList, jsonObj) =>
     outputEntityFile(distinctWorkStreamList, distinctTableList.filter(x => !x.includes("Hst")), tableFieldList);
 };
 
-const handleFunctionFile = (distinctWorkStreamList, distinctTableList, jsonObj) => {
-    const functionList = jsonObj.map(x => {
+const handleFunctionFile = (distinctWorkStreamList, jsonObj) => {
+    const functionList = jsonObj.filter(x => x["Key Step"] === "Yes").map(x => {
 
         return {
             workStream: x["Microservice"],
@@ -76,8 +76,8 @@ const handleFunctionFile = (distinctWorkStreamList, distinctTableList, jsonObj) 
 
     const filteredFunctionList = functionList.filter(x => x && x.input !== '' && x.output !== '');
 
-    outputControllerFile(distinctWorkStreamList, filteredFunctionList, distinctTableList.filter(x => x && !x.includes("Hst")));
-    outputServiceFile(distinctWorkStreamList, filteredFunctionList, distinctTableList.filter(x => x && !x.includes("Hst")));
+    outputControllerFile(distinctWorkStreamList, filteredFunctionList);
+    outputServiceFile(distinctWorkStreamList, filteredFunctionList);
 };
 
 module.exports = {

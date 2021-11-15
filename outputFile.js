@@ -53,13 +53,10 @@ const genGetter = (type, varName) => {
     return template;
 };
 
-const outputControllerFile = (distinctWorkStreamList, functionList, _distinctTableList) => {
+const outputControllerFile = (distinctWorkStreamList, functionList) => {
     distinctWorkStreamList.forEach(workStream => {
 
-        const fileName = `${config.outputPath}${workStream}/controller/${titleCase(workStream)}Controller.java`;
-
-        //const importEntity = distinctTableList.map(d => `    import org.life.${workStream}.entity.${d};`).join(os.EOL)
-
+        const fileName = `${config.outputPath}${workStream}/controller/${titleCase(workStream)}Controller.java`;     
         const fileHeader = controllerFileHeader(workStream);
 
         const functionStringList = functionList.filter(x => x.workStream === workStream).map(x => {
@@ -86,13 +83,10 @@ const outputControllerFile = (distinctWorkStreamList, functionList, _distinctTab
     });
 };
 
-const outputServiceFile = (distinctWorkStreamList, functionList, _distinctTableList) => {
+const outputServiceFile = (distinctWorkStreamList, functionList) => {
     distinctWorkStreamList.forEach(workStream => {
 
-        const fileName = `${config.outputPath}${workStream}/service/${titleCase(workStream)}Service.java`;
-
-        //const importEntity = distinctTableList.map(d => `   import org.life.${workStream}.entity.${d};`).join(os.EOL)
-
+        const fileName = `${config.outputPath}${workStream}/service/${titleCase(workStream)}Service.java`;        
         const fileHeader = serviceFileHeader(workStream);
 
         const functionStringList = functionList.filter(x => x.workStream === workStream).map(x => {
