@@ -6,7 +6,7 @@ const config = {
         {type: "String", mapping: ["Varchar"]},
         {type: "Date", mapping: ["Datetime", "Date"]},
         {type: "UUID", mapping: ["RAW", "Raw"]},
-        {type: "BigDecimal", mapping: ["NUMBER", "Number"]},
+        {type: "Double", mapping: ["NUMBER", "Number"]},
         {type: "Integer", mapping: ["int", "integer"]}
     ],
     apiOutputMapping: [
@@ -19,6 +19,6 @@ const config = {
         {type: "Post", mapping: ["sv"]},
         {type: "Get", mapping: ["ld", "chk", "vld"]}
     ]
-}
+};
 
-module.exports = config
+module.exports = config;

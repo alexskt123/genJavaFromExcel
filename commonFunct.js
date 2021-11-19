@@ -63,7 +63,7 @@ const handleEntityFile = (distinctWorkStreamList, distinctTableList, jsonObj) =>
 };
 
 const handleFunctionFile = (distinctWorkStreamList, jsonObj) => {
-    const functionList = jsonObj.filter(x => x["Key Step"] === "Yes").map(x => {
+    const functionList = jsonObj.map(x => {
 
         return {
             workStream: x["Microservice"],
