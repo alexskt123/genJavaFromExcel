@@ -3,7 +3,7 @@ const config = {
     outputPath: "./output/org/life/",
     outputFolders: ["entity", "controller", "service"],
     dataTypeMapping: [
-        {type: "String", mapping: ["Varchar"]},
+        {type: "String", mapping: ["Varchar", "NVarchar", "Numeric"]},
         {type: "Date", mapping: ["Datetime", "Date"]},
         {type: "UUID", mapping: ["RAW", "Raw"]},
         {type: "Double", mapping: ["NUMBER", "Number"]},

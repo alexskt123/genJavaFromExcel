@@ -59,7 +59,7 @@ const handleEntityFile = (distinctWorkStreamList, distinctTableList, jsonObj) =>
         };
     });
 
-    outputEntityFile(distinctWorkStreamList, distinctTableList.filter(x => !x.includes("Hst")), tableFieldList);
+    outputEntityFile(distinctWorkStreamList, distinctTableList, tableFieldList);
 };
 
 const handleFunctionFile = (distinctWorkStreamList, jsonObj) => {
