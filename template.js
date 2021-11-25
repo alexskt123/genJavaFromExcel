@@ -1,4 +1,4 @@
-const { titleCase } = require("title-case")
+const { titleCase } = require("title-case");
 
 const entityFileHeader = `package org.life.entity;
 
@@ -34,7 +34,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-`
+`;
 
 const controllerFileHeader = (workStream) => {
     return `    package org.life.controller.${workStream};
@@ -66,8 +66,8 @@ const controllerFileHeader = (workStream) => {
         @Autowired
         private ${titleCase(workStream)}Service ${workStream}Service;
 
-`
-}
+`;
+};
 
 const serviceFileHeader = (workStream) => {
     return `
@@ -80,11 +80,11 @@ const serviceFileHeader = (workStream) => {
     
     public interface ${titleCase(workStream)}Service {
  
-`
-}
+`;
+};
 
 module.exports = {
     entityFileHeader,
     controllerFileHeader,
     serviceFileHeader
-}
+};
