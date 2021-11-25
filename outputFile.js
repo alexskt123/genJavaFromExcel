@@ -2,9 +2,9 @@ const fs = require('fs');
 const distinct = require('distinct');
 const os = require("os");
 const { titleCase } = require('title-case');
-const { upperCaseFirst } = require('upper-case-first');
 const config = require('./config');
 const { entityFileHeader, controllerFileHeader, serviceFileHeader } = require('./template');
+const Trim = require('trim');
 
 const writeFile = ({fileName, fileContent}) => {
     fs.writeFile(fileName, fileContent, function (err) {
@@ -29,12 +29,7 @@ const outputEntityFile = (distinctWorkStreamList, distinctTableList, tableFieldL
                 return fieldString;
             }).join(os.EOL);
 
-            const getterList = tableFieldList.filter(x => x.table === t).map(x => {
-                const fieldString = genGetter(x.type, x.field);
-                return fieldString;
-            }).join(os.EOL);
-
-            const fileContent = `${entityFileHeader}${os.EOL}public class ${t} extends BaseEntityUuid {${os.EOL}${fieldStringList}${os.EOL}${getterList}${os.EOL}} ${os.EOL}`;
+            const fileContent = `${entityFileHeader}${os.EOL}public class ${t} extends BaseEntityUuid {${os.EOL}${fieldStringList}${os.EOL}} ${os.EOL}`;
 
             writeFile({ fileName, fileContent });
         });
@@ -42,15 +37,7 @@ const outputEntityFile = (distinctWorkStreamList, distinctTableList, tableFieldL
 };
 
 const getFunctionInput = (i) => {
-    return i.includes('request') ? `${i.split(':')[1]} request` : `${i.split(':')[0]} ${i.split(':')[1]}`;
-};
-
-const genGetter = (type, varName) => {
-    const template = type.includes('<') && type.includes('>') ? `    public ${getEntityType(type)} get${upperCaseFirst(varName)}(){
-        return ${varName};
-    }` : '';
-
-    return template;
+    return i.includes('request') ? `${Trim(i.split(':')[1] || '')} request` : `${i.split(':')[0]} ${Trim(i.split(':')[1] || '')}`;
 };
 
 const outputControllerFile = (distinctWorkStreamList, functionList) => {

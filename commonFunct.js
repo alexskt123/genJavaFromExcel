@@ -6,6 +6,7 @@ const mkdirp = require('mkdirp');
 
 const config = require('./config');
 const { outputEntityFile, outputControllerFile, outputServiceFile } = require('./outputFile');
+const Trim = require("trim");
 
 const filterCSVObj = (csvObj) => {
     return csvObj.filter(x => x?.Workstream?.length > 0);
@@ -49,12 +50,13 @@ const handleEntityFile = (distinctWorkStreamList, distinctTableList, jsonObj) =>
 
 
     const tableFieldList = jsonObj.map(x => {
+        const fieldName = Trim(upperCase(x["Field Name"]));
 
         return {
             workStream: x["Workstream"],
             table: fieldNameToJavaName(x["Table Name"], true),
-            column: upperCase(x["Field Name"]),
-            field: fieldNameToJavaName(x["Field Name"], false),
+            column: upperCase(fieldName),
+            field: fieldNameToJavaName(fieldName, false),
             type: handleType((config.dataTypeMapping.find(dt => dt.mapping.find(m => startWith(x["Data Type"], m))) || { type: x["Data Type"] }).type)
         };
     });
@@ -63,6 +65,8 @@ const handleEntityFile = (distinctWorkStreamList, distinctTableList, jsonObj) =>
 };
 
 const handleFunctionFile = (distinctWorkStreamList, jsonObj) => {
+    distinctWorkStreamList.forEach(x => createWorkStreamFolders(x));
+    
     const functionList = jsonObj.map(x => {
 
         return {

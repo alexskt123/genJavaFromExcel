@@ -6,6 +6,7 @@ const fileExists = require('file-exists');
 (async () => {
     const entityFile = `${config.inputPath}entity.csv`;
     const functionFile = `${config.inputPath}function.csv`;
+    let distinctWorkStreamList = [];
 
     if (fileExists.sync(entityFile)) {
         const entityObj = await getCSVObj(entityFile);    
@@ -14,14 +15,16 @@ const fileExists = require('file-exists');
         const workStreamList = entityObj.map(x => x["Workstream"]);
     
         const distinctTableList = distinct(tableList);
-        const distinctWorkStreamList = distinct(workStreamList);
+        distinctWorkStreamList = distinct(workStreamList);
     
         handleEntityFile(distinctWorkStreamList, distinctTableList, entityObj);
-    
-        if (fileExists.sync(functionFile)) {
-            const functionObj = await getCSVObj(functionFile);
-            handleFunctionFile(distinctWorkStreamList, functionObj);
-        }
+    }
+
+    if (fileExists.sync(functionFile)) {
+        const functionObj = await getCSVObj(functionFile);
+        const functionWorkStreamList = functionObj.map(x => x["Microservice"]);
+        const bothWorkStreamList = distinct(distinctWorkStreamList.concat(functionWorkStreamList));
+        handleFunctionFile(bothWorkStreamList, functionObj);
     }
 
 })().catch(e => {
