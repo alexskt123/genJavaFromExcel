@@ -50,7 +50,7 @@ const handleEntityFile = (distinctWorkStreamList, distinctTableList, jsonObj) =>
 
 
     const tableFieldList = jsonObj.map(x => {
-        const fieldName = Trim(upperCase(x["Field Name"]));
+        const fieldName = Trim(x["Field Name"]);
 
         return {
             workStream: x["Workstream"],
