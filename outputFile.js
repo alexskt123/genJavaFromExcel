@@ -54,7 +54,7 @@ const outputControllerFile = (distinctWorkStreamList, functionList) => {
 
             const functionTemplate = `\t@${x.method}Mapping(value="/${x.name}", produces=APPLICATION_JSON_VALUE)
             @Override
-            public ${x.output} ${x.name} (
+            public ${x.output.replace('request:', '')} ${x.name} (
                     ${inputTemplate}                    
             ) throws BaseException {
             }${os.EOL}`;
@@ -82,7 +82,7 @@ const outputServiceFile = (distinctWorkStreamList, functionList) => {
                 return input;
             }).join(', ');
 
-            const functionTemplate = `\t\tpublic ${x.output} ${x.name}(${inputTemplate}) throws BaseException;${os.EOL}`;
+            const functionTemplate = `\t\tpublic ${x.output.replace('request:', '')} ${x.name}(${inputTemplate}) throws BaseException;${os.EOL}`;
 
             return functionTemplate;
         }).join(os.EOL);
