@@ -3,9 +3,9 @@ const distinct = require('distinct');
 const os = require("os");
 const { titleCase } = require('title-case');
 const config = require('./config');
-const { entityFileHeader, controllerFileHeader, serviceFileHeader } = require('./template');
+const { entityFileHeader, controllerFileHeader, serviceFileHeader, serviceImplFileHeader } = require('./template');
 const Trim = require('trim');
-const { fieldNameToJavaName, handleType, createWorkStreamFolders, isSAD } = require('./commonFunct');
+const { fieldNameToJavaName, handleType, createWorkStreamFolders, isSAD, getMode } = require('./commonFunct');
 var startWith = require('start-with');
 const { upperCase } = require('upper-case');
 
@@ -60,6 +60,7 @@ const handleFunctionFile = (distinctWorkStreamList, jsonObj) => {
 
     outputControllerFile(distinctWorkStreamList, filteredFunctionList);
     outputServiceFile(distinctWorkStreamList, filteredFunctionList);
+    !isSAD() && outputServiceImplFile(distinctWorkStreamList, filteredFunctionList);
 };
 
 const outputEntityFile = (distinctWorkStreamList, distinctTableList, tableFieldList) => {
@@ -71,11 +72,14 @@ const outputEntityFile = (distinctWorkStreamList, distinctTableList, tableFieldL
             const fileName = `${config.outputPath}${workStream}/entity/${t}.java`;
 
             const fieldStringList = tableFieldList.filter(x => x.table === t).map(x => {
-                const fieldString = `\t@Column(name = "${x.column}")${os.EOL}\tprivate ${listToArray(getEntityType(x.type))} ${x.field};${os.EOL}`;
+                const columnString = isSAD() ? `\t@Column(name = "${x.column}")${os.EOL}` : '';
+                const fieldString = `${columnString}\tprivate ${listToArray(getEntityType(x.type))} ${x.field};${os.EOL}`;
                 return fieldString;
             }).join(os.EOL);
 
-            const fileContent = `${entityFileHeader}${os.EOL}public class ${t} extends BaseEntityUuid {${os.EOL}${fieldStringList}${os.EOL}} ${os.EOL}`;
+            const extend = isSAD() ? ` extends BaseEntityUuid` : '';
+
+            const fileContent = `${entityFileHeader[getMode()]}${os.EOL}public class ${t}${extend} {${os.EOL}${fieldStringList}${os.EOL}} ${os.EOL}`;
 
             writeFile({ fileName, fileContent });
         });
@@ -128,18 +132,45 @@ const outputServiceFile = (distinctWorkStreamList, functionList) => {
                 return input;
             }).join(', ');
 
-            const functionTemplate = `\t\tpublic ${x.output.replace('request:', '')} ${x.name}(${inputTemplate}) throws BaseException;${os.EOL}`;
+            const functionTemplate = `\tpublic ${x.output.replace('request:', '')} ${x.name}(${inputTemplate});${os.EOL}`;
 
             return functionTemplate;
         }).join(os.EOL);
 
-        const fileTailer = "\t}";
+        const fileTailer = "}";
 
         const fileContent = `${fileHeader}${functionStringList}${fileTailer}`;
 
         writeFile({ fileName, fileContent });
     });
 };
+
+const outputServiceImplFile = (distinctWorkStreamList, functionList) => {
+
+    distinctWorkStreamList.forEach(workStream => {
+
+        const fileName = `${config.outputPath}${workStream}/service/${titleCase(workStream)}ServiceImpl.java`;        
+        const fileHeader = serviceImplFileHeader(workStream);
+
+        const functionStringList = functionList.filter(x => x.workStream === workStream).map(x => {
+            const inputTemplate = x.input.split(',').filter(x => x !== 'N/A').map(i => {
+                const input = getFunctionInput(i);
+                return input;
+            }).join(', ');
+
+            const functionTemplate = `\tpublic ${x.output.replace('request:', '')} ${x.name}(${inputTemplate}) {${os.EOL}\t}${os.EOL}`;
+
+            return functionTemplate;
+        }).join(os.EOL);
+
+        const fileTailer = "}";
+
+        const fileContent = `${fileHeader}${functionStringList}${fileTailer}`;
+
+        writeFile({ fileName, fileContent });
+    });
+};
+
 
 module.exports = {
     handleEntityFile,
