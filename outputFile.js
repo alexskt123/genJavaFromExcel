@@ -5,6 +5,9 @@ const { titleCase } = require('title-case');
 const config = require('./config');
 const { entityFileHeader, controllerFileHeader, serviceFileHeader } = require('./template');
 const Trim = require('trim');
+const { fieldNameToJavaName, handleType, createWorkStreamFolders, isSAD } = require('./commonFunct');
+var startWith = require('start-with');
+const { upperCase } = require('upper-case');
 
 const writeFile = ({fileName, fileContent}) => {
     fs.writeFile(fileName, fileContent, function (err) {
@@ -16,6 +19,49 @@ const getEntityType = (type) => {
     return type.includes('List<') ? type : type.replace('<', '').replace('>', '');
 };
 
+const listToArray = (field) => {
+    return isSAD() && field.includes('List<') ? `${field.replace('List<', '').replace('>', '')}[]` : field;
+};
+
+const handleEntityFile = (distinctWorkStreamList, distinctTableList, jsonObj) => {
+    distinctWorkStreamList.forEach(x => createWorkStreamFolders(x));
+
+
+    const tableFieldList = jsonObj.map(x => {
+        const fieldName = Trim(x["Field Name"]);
+
+        return {
+            workStream: x["Workstream"],
+            table: fieldNameToJavaName(x["Table Name"], true),
+            column: upperCase(fieldName),
+            field: fieldNameToJavaName(fieldName, false),
+            type: handleType((config.dataTypeMapping.find(dt => dt.mapping.find(m => startWith(x["Data Type"], m))) || { type: x["Data Type"] }).type)
+        };
+    });
+
+    outputEntityFile(distinctWorkStreamList, distinctTableList, tableFieldList);
+};
+
+const handleFunctionFile = (distinctWorkStreamList, jsonObj) => {
+    distinctWorkStreamList.forEach(x => createWorkStreamFolders(x));
+    
+    const functionList = jsonObj.map(x => {
+
+        return {
+            workStream: x["Microservice"],
+            name: x["Common Function name"],
+            input: x["Input fields"],
+            output: (config.apiOutputMapping.find(a => a.mapping.find(m => startWith(upperCase(x["Output filed"]), upperCase(m)))) || { type: x["Output filed"] }).type,
+            method: (config.apiMethodMapping.find(a => a.mapping.find(m => startWith(x["Common Function name"], m))) || { type: x["Common Function name"] }).type,
+        };
+    });
+
+    const filteredFunctionList = functionList.filter(x => x && x.input !== '' && x.output !== '');
+
+    outputControllerFile(distinctWorkStreamList, filteredFunctionList);
+    outputServiceFile(distinctWorkStreamList, filteredFunctionList);
+};
+
 const outputEntityFile = (distinctWorkStreamList, distinctTableList, tableFieldList) => {
 
     distinctWorkStreamList.forEach(workStream => {
@@ -25,7 +71,7 @@ const outputEntityFile = (distinctWorkStreamList, distinctTableList, tableFieldL
             const fileName = `${config.outputPath}${workStream}/entity/${t}.java`;
 
             const fieldStringList = tableFieldList.filter(x => x.table === t).map(x => {
-                const fieldString = `\t@Column(name = "${x.column}")${os.EOL}\tprivate ${getEntityType(x.type)} ${x.field};${os.EOL}`;
+                const fieldString = `\t@Column(name = "${x.column}")${os.EOL}\tprivate ${listToArray(getEntityType(x.type))} ${x.field};${os.EOL}`;
                 return fieldString;
             }).join(os.EOL);
 
@@ -96,6 +142,8 @@ const outputServiceFile = (distinctWorkStreamList, functionList) => {
 };
 
 module.exports = {
+    handleEntityFile,
+    handleFunctionFile,
     outputEntityFile,
     outputControllerFile,
     outputServiceFile
