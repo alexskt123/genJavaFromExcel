@@ -88,7 +88,8 @@ const controllerFileHeader = (workStream) => {
 };
 
 const serviceFileHeader = (workStream) => {
-    return `package org.life.service;
+    return {
+        sad: `package org.life.${workStream}.service;
 
 import java.text.ParseException;
 import java.util.List;
@@ -101,7 +102,22 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 
 public interface ${titleCase(workStream)}Service {
 
-`;
+`,
+code : `package org.life.service;
+
+import java.text.ParseException;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.UUID;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+
+public interface ${titleCase(workStream)}Service {
+
+`
+    };
 };
 
 const serviceImplFileHeader = (workStream) => {
@@ -120,6 +136,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
+
+import org.life.service.${titleCase(workStream)}Service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

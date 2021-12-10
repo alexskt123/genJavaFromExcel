@@ -139,7 +139,7 @@ const outputServiceFile = (distinctWorkStreamList, functionList) => {
 
         const fileTailer = "}";
 
-        const fileContent = `${fileHeader}${functionStringList}${fileTailer}`;
+        const fileContent = `${fileHeader[getMode()]}${functionStringList}${fileTailer}`;
 
         writeFile({ fileName, fileContent });
     });
