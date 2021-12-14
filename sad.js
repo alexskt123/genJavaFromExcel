@@ -1,13 +1,11 @@
-
 const { execute, log, program } = require('./execute');
 
 (async () => {    
     program
     .version('0.0.1')
-    .argument('<mode>', 'mode to run')
     .description('Generate Java classes from Excel')
-    .action((mode) => {        
-        execute(mode);
+    .action(() => {        
+        execute('sad');
     });
 
     await program.parseAsync(process.argv);    

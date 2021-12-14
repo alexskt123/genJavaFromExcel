@@ -5,15 +5,19 @@
  "scripts": {
   "lint": "eslint --fix **/*.js",
   "sad": "node . sad",
-  "code" : "node . code"
+  "code": "node . code",
+  "sad-exe": "pkg sad.js -o genJavaFromExcelSAD.exe",
+  "code-exe": "pkg code.js -o genJavaFromExcelCode.exe"
  },
  "dependencies": {
   "change-case": "^4.1.2",
+  "commander": "^8.3.0",
   "csvtojson": "^2.0.10",
   "distinct": "^0.1.0",
   "file-exists": "^5.0.1",
   "mkdirp": "^1.0.4",
   "save": "^2.4.0",
+  "simple-node-logger": "^21.8.12",
   "start-with": "^1.0.2",
   "title-case": "^3.0.3",
   "trim": "^1.0.1",
