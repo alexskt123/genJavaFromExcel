@@ -6,8 +6,8 @@ const config = {
         {type: "String", mapping: ["Varchar", "NVarchar", "Numeric", "varchar", "VARCHAR2"]},
         {type: "Date", mapping: ["Datetime", "Date", "date"]},
         {type: "UUID", mapping: ["RAW", "Raw", "raw"]},
-        {type: "Double", mapping: ["NUMBER", "Number", "number"]},
-        {type: "Integer", mapping: ["int", "integer"]},
+        {type: "BigDecimal", mapping: ["NUMBER", "Number", "number"]},
+        {type: "Integer", mapping: ["integer"]},
         {type: "Boolean", mapping: ["bool", "boolean"]}
     ],
     apiOutputMapping: [

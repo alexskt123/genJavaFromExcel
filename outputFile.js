@@ -16,7 +16,7 @@ const writeFile = ({fileName, fileContent}) => {
 };
 
 const getEntityType = (type) => {
-    return type.includes('List<') ? type : type.replace('<', '').replace('>', '');
+    return type.includes('List<') || type.includes('Map<') ? type : type.replace('<', '').replace('>', '');
 };
 
 const listToArray = (field) => {

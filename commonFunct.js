@@ -26,6 +26,7 @@ const filterCSVObj = (csvObj) => {
 
 const handleType = (type) => {
     return type.includes('List<') ? `List<${upperCaseFirst(type.replace('List<', ''))}`
+            : type.includes('Map<') ? `Map<${upperCaseFirst(type.replace('Map<', ''))}`
             : type.includes('<') ? `<${upperCaseFirst(type.replace('<', ''))}`
             : type;
 };
