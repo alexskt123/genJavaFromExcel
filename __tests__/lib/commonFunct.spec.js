@@ -1,4 +1,4 @@
-const { getCSVFilesFromPath, handleType, filterCSVObj } = require("../../lib/commonFunct");
+const { getCSVFilesFromPath, handleType, filterCSVObj, getCSVObj, fieldNameToJavaName, isSAD, getMode, setMode } = require("../../lib/commonFunct");
 
 describe("Common Functions", () => {
     test("Get CSV Files from Empty Path", () => {
@@ -18,5 +18,37 @@ describe("Common Functions", () => {
 describe("Common Functions", () => {
     test("Filter CSV Obj", () => {
         expect(filterCSVObj([])).toStrictEqual([]);
+    });
+});
+
+describe("Common Functions", () => {
+    test("Get CSV Obj", () => {
+        expect(getCSVObj("")).resolves.toStrictEqual([]);
+    });
+});
+
+describe("Common Functions", () => {
+    test("Field Name to Java Name", () => {
+        expect(fieldNameToJavaName("id_txt")).toStrictEqual('idTxt');
+        expect(fieldNameToJavaName("name")).toStrictEqual('name');
+        expect(fieldNameToJavaName("mbr_passport_no")).toStrictEqual('mbrPassportNo');
+    });
+});
+
+describe("Common Functions", () => {
+    test("Is SAD", () => {
+        expect(isSAD()).toStrictEqual(true);
+    });
+});
+
+describe("Common Functions", () => {
+    test("Get Mode", () => {
+        expect(getMode()).toStrictEqual('sad');
+    });
+});
+
+describe("Common Functions", () => {
+    test("Set Mode", () => {
+        expect(setMode('code')).toStrictEqual('code');
     });
 });
