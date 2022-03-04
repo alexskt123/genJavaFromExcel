@@ -1,8 +1,8 @@
 const distinct = require('distinct');
-const config = require('./config');
-const { fieldNameToJavaName, getCSVObj, setMode } = require('./commonFunct');
+const setting = require('./config/setting');
+const { fieldNameToJavaName, getCSVObj, setMode } = require('./lib/commonFunct');
 const fileExists = require('file-exists');
-const { handleEntityFile, handleFunctionFile } = require('./outputFile');
+const { handleEntityFile, handleFunctionFile } = require('./lib/outputFile');
 const Logger = require('simple-node-logger'),
 	opts = {
 		logFilePath:'genJavaFromExcel.log',
@@ -13,8 +13,8 @@ const { Command } = require('commander');
 const program = new Command();
 
 const execute = async (curMode) => {
-    const entityFile = `${config.inputPath}entity.csv`;
-    const functionFile = `${config.inputPath}function.csv`;
+    const entityFile = `${setting.inputPath}entity.csv`;
+    const functionFile = `${setting.inputPath}function.csv`;
     let distinctWorkStreamList = [];
     
     curMode && setMode(curMode);
