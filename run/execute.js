@@ -1,8 +1,8 @@
 const distinct = require('distinct');
-const setting = require('./config/setting');
-const { fieldNameToJavaName, getCSVObj, setMode } = require('./lib/commonFunct');
+const setting = require('../config/setting');
+const { fieldNameToJavaName, getCSVObj, setMode } = require('../lib/commonFunct');
 const fileExists = require('file-exists');
-const { handleEntityFile, handleFunctionFile } = require('./lib/outputFile');
+const { handleEntityFile, handleFunctionFile } = require('../lib/outputFile');
 const Logger = require('simple-node-logger'),
 	opts = {
 		logFilePath:'genJavaFromExcel.log',

@@ -1,5 +1,5 @@
 
-const { execute, log, program } = require('./execute');
+const { execute, log, program } = require('./run/execute');
 
 (async () => {    
     program
