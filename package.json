@@ -4,8 +4,8 @@
  "private": true,
  "scripts": {
   "lint": "eslint --fix **/*.js",
-  "sad": "node . run/sad",
-  "code": "node . run/code",
+  "sad": "node . sad",
+  "code": "node . code",
   "sad-exe": "pkg run/sad.js -o genJavaFromExcelSAD.exe",
   "code-exe": "pkg run/code.js -o genJavaFromExcelCode.exe"
  },
