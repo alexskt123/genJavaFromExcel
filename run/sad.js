@@ -1,7 +1,7 @@
 const { execute, log } = require('./execute');
 
 try {
-    execute('sad');
+  execute('sad');
 } catch (e) {
-    log.error(e);
+  log.error(e);
 }

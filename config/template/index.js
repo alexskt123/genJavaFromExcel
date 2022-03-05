@@ -1,7 +1,7 @@
-const { titleCase } = require("title-case");
+const { titleCase } = require('title-case');
 
 const entityFileHeader = {
-    sad: `package org.life.entity;
+  sad: `package org.life.entity;
 
 import java.util.Date;
 import java.util.List;
@@ -36,7 +36,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 `,
-    code: `package org.life.entity.vo;
+  code: `package org.life.entity.vo;
     
 import java.util.Date;
 import java.util.List;
@@ -51,11 +51,11 @@ import lombok.NoArgsConstructor;
 @Data
 @Builder
 @AllArgsConstructor
-@NoArgsConstructor`
+@NoArgsConstructor`,
 };
 
 const controllerFileHeader = (workStream) => {
-    return `    package org.life.controller.${workStream};
+  return `    package org.life.controller.${workStream};
     
     import java.util.List;
     import javax.servlet.http.HttpServletResponse;
@@ -88,8 +88,8 @@ const controllerFileHeader = (workStream) => {
 };
 
 const serviceFileHeader = (workStream) => {
-    return {
-        sad: `package org.life.${workStream}.service;
+  return {
+    sad: `package org.life.${workStream}.service;
 
 import java.text.ParseException;
 import java.util.List;
@@ -103,7 +103,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 public interface ${titleCase(workStream)}Service {
 
 `,
-code : `package org.life.service;
+    code: `package org.life.service;
 
 import java.text.ParseException;
 import java.util.List;
@@ -116,12 +116,12 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 
 public interface ${titleCase(workStream)}Service {
 
-`
-    };
+`,
+  };
 };
 
 const serviceImplFileHeader = (workStream) => {
-    return `package org.life.service.impl;
+  return `package org.life.service.impl;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -159,8 +159,8 @@ public class ${titleCase(workStream)}ServiceImpl implements ${titleCase(workStre
 };
 
 module.exports = {
-    entityFileHeader,
-    controllerFileHeader,
-    serviceFileHeader,
-    serviceImplFileHeader
+  entityFileHeader,
+  controllerFileHeader,
+  serviceFileHeader,
+  serviceImplFileHeader,
 };
