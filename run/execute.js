@@ -13,7 +13,6 @@ const { Command } = require('commander');
 const program = new Command();
 
 const execute = async (curMode) => {
-    console.log(curMode);
     const csvFiles = getCSVFilesFromPath(setting.inputPath);
 
     const entityFile = `${setting.inputPath}${csvFiles.find(x => x.replace('entity') !== x)}`;
@@ -45,6 +44,8 @@ const execute = async (curMode) => {
     }
 
     !entityFileExists && !functionFileExists && log.error('Missing files!');
+
+    (entityFileExists || functionFileExists) && log.info(`Current Mode = ${curMode} finished!`);
 };
 
 

@@ -2,16 +2,14 @@ const { execute, log, program } = require('./run/execute');
 
 try {
     program
-        .version('0.0.1')
-        .argument('<mode>', 'mode to run')
-        .description('Generate Java classes from Excel')
-        .action((mode) => {
-            execute(mode);
-        });
+        .description('An application for generating Java Classes from csv files')
+        .option('-m, --mode <type>', 'Pass the specified type of mode', 'sad');
 
-    program.parseAsync(process.argv);
-    log.info('Finished');
+    program.parse();
 
+    const options = program.opts();
+    const { mode } = options;
+    execute(mode);
 } catch (e) {
     log.error(e);
 }
