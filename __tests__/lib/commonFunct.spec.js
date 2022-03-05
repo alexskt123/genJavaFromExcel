@@ -4,8 +4,6 @@ const {
   handleType,
   filterCSVObj,
   getCSVObj,
-  setMode,
-  getMode,
   isSAD,
   getCSVFilesFromPath,
 } = require('../../lib/commonFunct');
@@ -47,24 +45,13 @@ describe('Common Functions', () => {
 
 describe('Common Functions', () => {
   test('Is SAD', () => {
-    expect(isSAD()).toStrictEqual(true);
+    expect(isSAD('sad')).toStrictEqual(true);
+    expect(isSAD('code')).toStrictEqual(false);
   });
 });
 
 describe('Common Functions', () => {
   test('Create Work Stream Folders', () => {
     expect(createWorkStreamFolders('')).toStrictEqual(true);
-  });
-});
-
-describe('Common Functions', () => {
-  test('Get Mode', () => {
-    expect(getMode()).toStrictEqual('sad');
-  });
-});
-
-describe('Common Functions', () => {
-  test('Set Mode', () => {
-    expect(setMode('code')).toStrictEqual('code');
   });
 });
