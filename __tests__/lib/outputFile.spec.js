@@ -1,4 +1,13 @@
-const { writeFile, getEntityType, listToArray, getFunctionInput } = require('../../lib/outputFile');
+const {
+  writeFile,
+  getEntityType,
+  listToArray,
+  getFunctionInput,
+  outputServiceFile,
+  outputEntityFile,
+  handleEntityFile,
+} = require('../../lib/outputFile');
+const { config } = require('../../config/test');
 
 describe('Output File', () => {
   test('Write File', () => {
@@ -25,5 +34,28 @@ describe('Output File', () => {
   test('Get Function Input', () => {
     expect(getFunctionInput('request: Apple')).toStrictEqual('Apple request');
     expect(getFunctionInput('String:try')).toStrictEqual('String try');
+  });
+});
+
+describe('Output File', () => {
+  test('Output Service File', () => {
+    const { distinctWorkStreamList, functionList } = config.functionInput;
+    expect(outputServiceFile(distinctWorkStreamList, functionList)).toStrictEqual(config.functionOutput);
+  });
+});
+
+describe('Output File', () => {
+  test('Handle Entity File', () => {
+    const { distinctWorkStreamList, distinctTableList, jsonObj } = config.entityInput;
+    expect(handleEntityFile(distinctWorkStreamList, distinctTableList, jsonObj)).toStrictEqual(config.entityOutput);
+  });
+});
+
+describe('Output File', () => {
+  test('Output Entity File', () => {
+    const { distinctWorkStreamList, distinctTableList, tableFieldList } = config.entityInput;
+    expect(outputEntityFile(distinctWorkStreamList, distinctTableList, tableFieldList)).toStrictEqual(
+      config.entityOutput,
+    );
   });
 });
