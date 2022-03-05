@@ -9,7 +9,10 @@
     "sad-exe": "pkg run/sad.js -o genJavaFromExcelSAD.exe",
     "code-exe": "pkg run/code.js -o genJavaFromExcelCode.exe",
     "pretty": "npx prettier --write .",
-    "check-pretty": "npx prettier --check ."
+    "check-pretty": "npx prettier --check .",
+    "prepare": "husky install",
+    "fix": "lint-staged",
+    "test": "lint-staged"
   },
   "dependencies": {
     "change-case": "^4.1.2",
@@ -29,6 +32,11 @@
   },
   "devDependencies": {
     "eslint": "^8.2.0",
+    "husky": "^7.0.4",
+    "lint-staged": "^12.3.4",
     "prettier": "2.5.1"
+  },
+  "lint-staged": {
+    "**/*.js": "prettier --write --ignore-unknown"
   }
 }
