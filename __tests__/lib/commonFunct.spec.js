@@ -1,4 +1,14 @@
-const { getCSVFilesFromPath, handleType, filterCSVObj, getCSVObj, fieldNameToJavaName, isSAD, getMode, setMode } = require("../../lib/commonFunct");
+const {
+    fieldNameToJavaName,
+    createWorkStreamFolders,
+    handleType,
+    filterCSVObj,
+    getCSVObj,
+    setMode,
+    getMode,
+    isSAD,
+    getCSVFilesFromPath
+} = require("../../lib/commonFunct");
 
 describe("Common Functions", () => {
     test("Get CSV Files from Empty Path", () => {
@@ -38,6 +48,12 @@ describe("Common Functions", () => {
 describe("Common Functions", () => {
     test("Is SAD", () => {
         expect(isSAD()).toStrictEqual(true);
+    });
+});
+
+describe("Common Functions", () => {
+    test("Create Work Stream Folders", () => {
+        expect(createWorkStreamFolders('')).toStrictEqual(true);
     });
 });
 
