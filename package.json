@@ -12,7 +12,8 @@
     "check-pretty": "npx prettier --check .",
     "prepare": "husky install",
     "fix": "lint-staged",
-    "test": "jest"
+    "test": "lint-staged",
+    "jest": "jest"
   },
   "dependencies": {
     "change-case": "^4.1.2",
