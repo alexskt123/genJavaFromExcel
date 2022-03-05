@@ -1,6 +1,6 @@
 const distinct = require('distinct');
 const setting = require('../config/setting');
-const { fieldNameToJavaName, getCSVObj, setMode, getCSVFilesFromPath } = require('../lib/commonFunct');
+const { fieldNameToJavaName, getCSVObj, getCSVFilesFromPath } = require('../lib/commonFunct');
 const fileExists = require('file-exists');
 const { handleEntityFile, handleFunctionFile } = require('../lib/outputFile');
 const Logger = require('simple-node-logger'),
@@ -19,8 +19,6 @@ const execute = async (curMode) => {
   const functionFile = `${setting.inputPath}${csvFiles.find((x) => x.replace('function') !== x)}`;
   let distinctWorkStreamList = [];
 
-  curMode && setMode(curMode);
-
   const entityFileExists = fileExists.sync(entityFile);
   const functionFileExists = fileExists.sync(functionFile);
 
@@ -33,14 +31,14 @@ const execute = async (curMode) => {
     const distinctTableList = distinct(tableList);
     distinctWorkStreamList = distinct(workStreamList);
 
-    handleEntityFile(distinctWorkStreamList, distinctTableList, entityObj);
+    handleEntityFile(distinctWorkStreamList, distinctTableList, entityObj, curMode);
   }
 
   if (functionFileExists) {
     const functionObj = await getCSVObj(functionFile);
     const functionWorkStreamList = functionObj.map((x) => x['Microservice']);
     const bothWorkStreamList = distinct(distinctWorkStreamList.concat(functionWorkStreamList));
-    handleFunctionFile(bothWorkStreamList, functionObj);
+    handleFunctionFile(bothWorkStreamList, functionObj, curMode);
   }
 
   !entityFileExists && !functionFileExists && log.error('Missing files!');
