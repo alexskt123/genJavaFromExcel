@@ -52,6 +52,7 @@ describe('Common Functions', () => {
 
 describe('Common Functions', () => {
   test('Create Work Stream Folders', () => {
-    expect(createWorkStreamFolders('')).toStrictEqual(true);
+    expect(createWorkStreamFolders('')).toStrictEqual(false);
+    expect(createWorkStreamFolders('Fruit')).toStrictEqual(true);
   });
 });

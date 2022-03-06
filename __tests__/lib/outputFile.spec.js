@@ -3,6 +3,7 @@ const {
   getEntityType,
   listToArray,
   getFunctionInput,
+  outputControllerFile,
   outputServiceFile,
   outputServiceImplFile,
   outputEntityFile,
@@ -36,6 +37,16 @@ describe('Output File', () => {
   test('Get Function Input', () => {
     expect(getFunctionInput('request: Apple')).toStrictEqual('Apple request');
     expect(getFunctionInput('String:try')).toStrictEqual('String try');
+  });
+});
+
+describe('Output File', () => {
+  test('Output Controller File', () => {
+    const { distinctWorkStreamList, functionList } = config.functionInput;
+    expect(outputControllerFile(distinctWorkStreamList, functionList)).toStrictEqual(
+      config.functionOutput.controllerFile,
+    );
+    expect(outputControllerFile('', '')).toStrictEqual([]);
   });
 });
 

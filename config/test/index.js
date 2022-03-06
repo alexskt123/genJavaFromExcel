@@ -34,6 +34,48 @@ const config = {
     ],
   },
   functionOutput: {
+    controllerFile: [
+      {
+        fileName: './output/org/life/Fruit/controller/FruitController.java',
+        fileContent:
+          '    package org.life.controller.Fruit;\n' +
+          '    \n' +
+          '    import java.util.List;\n' +
+          '    import javax.servlet.http.HttpServletResponse;\n' +
+          '    import org.life.dto.BaseResponse;    \n' +
+          '    import org.life.Fruit.service.FruitService;\n' +
+          '    import org.springframework.beans.factory.annotation.Autowired;\n' +
+          '    import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;\n' +
+          '    \n' +
+          '    import org.springframework.web.bind.annotation.GetMapping;\n' +
+          '    import org.springframework.web.bind.annotation.PostMapping;\n' +
+          '    import org.springframework.web.bind.annotation.RequestBody;\n' +
+          '    import org.springframework.web.bind.annotation.RequestParam;\n' +
+          '    import org.springframework.web.bind.annotation.RestController;\n' +
+          '    import javax.naming.directory.SearchControls;\n' +
+          '    import javax.naming.ldap.LdapContext;\n' +
+          '    \n' +
+          '    import org.springframework.beans.factory.annotation.Value;\n' +
+          '    import java.util.logging.Logger;\n' +
+          '    import org.life.BaseException;\n' +
+          '    import org.life.db.LifePageRequest;\n' +
+          '    import org.life.dto.SrchIndRequest;\n' +
+          '    \n' +
+          '    @RestController\n' +
+          '    public class FruitController implements FruitControllerInterface {\n' +
+          '        \n' +
+          '        @Autowired\n' +
+          '        private FruitService FruitService;\n' +
+          '\n' +
+          '\t@getFruitsMapping(value="/getFruits", produces=APPLICATION_JSON_VALUE)\n' +
+          '              @Override\n' +
+          '              public List<Apple> getFruits (\n' +
+          '                      @RequestParam String fruit_cd                    \n' +
+          '              ) throws BaseException {\n' +
+          '              }\r\n' +
+          '    }',
+      },
+    ],
     serviceFile: [
       {
         fileName: './output/org/life/Fruit/service/FruitService.java',
