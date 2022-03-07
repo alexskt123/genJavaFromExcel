@@ -1,7 +1,7 @@
 const config = {
   inputPath: './',
   outputPath: './output/org/life/',
-  outputFolders: ['entity', 'controller', 'service'],
+  outputFolders: ['entity', 'controller', 'service', 'data'],
   dataTypeMapping: [
     { type: 'String', mapping: ['Varchar', 'NVarchar', 'Numeric', 'varchar', 'VARCHAR2'] },
     { type: 'Date', mapping: ['Datetime', 'Date', 'date'] },

@@ -32,6 +32,27 @@ const config = {
         'Sub-Function': 'getApple\ngetOrange',
       },
     ],
+    mapperObj: [
+      {
+        Workstream: 'Fruit',
+        'Common Function name': 'getFruits',
+        statementType: 'select',
+        statement: 'SELECT * FROM FRUIT WHERE ID = #{id}',
+        id: 'selectFruit',
+        parameterType: 'int',
+        resultType: 'hashmap',
+      },
+      {
+        Workstream: 'Fruit',
+        'Common Function name': 'saveApple',
+        statementType: 'update',
+        statement:
+          'update Fruit set\n' + '    fruit_cd = #{fruitCd}\n' + '    fruit_name = #{name} \n' + 'where id = #{id}',
+        id: 'updateFruit',
+        parameterType: '',
+        resultType: '',
+      },
+    ],
   },
   functionOutput: {
     controllerFile: [
@@ -151,6 +172,18 @@ const config = {
           '\tpublic List<Apple> getFruits(String fruit_cd) {\r\n' +
           '\t}\r\n' +
           '}',
+      },
+    ],
+    mapperFile: [
+      {
+        fileName: './output/org/life/Fruit/data/Fruit.xml',
+        fileContent:
+          '<?xml version="1.0" encoding="UTF-8"?>\r\n' +
+          '<mapper>\r\n' +
+          '    <select id="selectFruit">\r\n' +
+          '        SELECT * FROM FRUIT WHERE ID = #{id}\r\n' +
+          '    </select>\r\n' +
+          '</mapper>',
       },
     ],
   },

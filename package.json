@@ -28,7 +28,9 @@
     "trim": "^1.0.1",
     "upper-case": "^2.0.2",
     "upper-case-first": "^2.0.2",
-    "write": "^2.0.0"
+    "write": "^2.0.0",
+    "xml": "^1.0.1",
+    "xml-formatter": "^2.6.1"
   },
   "devDependencies": {
     "eslint": "^8.2.0",

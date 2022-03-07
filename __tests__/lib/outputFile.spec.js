@@ -72,8 +72,8 @@ describe('Output File', () => {
 
 describe('Output File', () => {
   test('Handle Function File', () => {
-    const { distinctWorkStreamList, jsonObj } = config.functionInput;
-    expect(handleFunctionFile(distinctWorkStreamList, jsonObj, 'code')).toStrictEqual(config.functionOutput);
+    const { distinctWorkStreamList, jsonObj, mapperObj } = config.functionInput;
+    expect(handleFunctionFile(distinctWorkStreamList, jsonObj, mapperObj, 'code')).toStrictEqual(config.functionOutput);
     expect(handleFunctionFile('', '', 'code')).toStrictEqual({});
   });
 });

@@ -17,6 +17,7 @@ const execute = async (curMode) => {
 
   const entityFile = `${setting.inputPath}${csvFiles.find((x) => x.replace('entity') !== x)}`;
   const functionFile = `${setting.inputPath}${csvFiles.find((x) => x.replace('function') !== x)}`;
+  const mapperFile = `${setting.inputPath}${csvFiles.find((x) => x.replace('mapper') !== x)}`;
   let distinctWorkStreamList = [];
 
   const entityFileExists = fileExists.sync(entityFile);
@@ -36,9 +37,10 @@ const execute = async (curMode) => {
 
   if (functionFileExists) {
     const functionObj = await getCSVObj(functionFile);
+    const mapperObj = await getCSVObj(mapperFile);
     const functionWorkStreamList = functionObj.map((x) => x['Microservice']);
     const bothWorkStreamList = distinct(distinctWorkStreamList.concat(functionWorkStreamList));
-    handleFunctionFile(bothWorkStreamList, functionObj, curMode);
+    handleFunctionFile(bothWorkStreamList, functionObj, mapperObj, curMode);
   }
 
   !entityFileExists && !functionFileExists && log.error('Missing files!');
