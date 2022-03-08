@@ -12,5 +12,6 @@ package-lock.json
 *.csv
 *.log
 *.exe
+*.xlsx
 
 /coverage
