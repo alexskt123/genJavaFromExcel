@@ -5,12 +5,12 @@ const {
   filterCSVObj,
   getCSVObj,
   isSAD,
-  getCSVFilesFromPath,
+  getFilesFromPath,
 } = require('../../lib/commonFunct');
 
 describe('Common Functions', () => {
   test('Get CSV Files from Empty Path', () => {
-    expect(getCSVFilesFromPath('')).toStrictEqual([]);
+    expect(getFilesFromPath('', '')).toStrictEqual([]);
   });
 });
 

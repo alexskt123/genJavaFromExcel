@@ -28,7 +28,8 @@
     "trim": "^1.0.1",
     "upper-case": "^2.0.2",
     "upper-case-first": "^2.0.2",
-    "write": "^2.0.0"
+    "write": "^2.0.0",
+    "xlsx": "^0.18.3"
   },
   "devDependencies": {
     "eslint": "^8.2.0",
